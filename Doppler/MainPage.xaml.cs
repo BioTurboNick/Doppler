@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +27,14 @@ namespace Doppler
         public MainPage()
         {
             this.InitializeComponent();
+        }
+        Random rng = new Random();
+
+        private void CanvasControl_Draw(Microsoft.Graphics.Canvas.UI.Xaml.CanvasControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasDrawEventArgs args)
+        {
+            args.DrawingSession.FillCircle(new Vector2((float)(rng.NextDouble() * ActualWidth), (float)(rng.NextDouble() * ActualHeight)), 5, Colors.Red);
+            args.DrawingSession.DrawEllipse(155, 115, 80, 30, Colors.Black, 3);
+            args.DrawingSession.DrawText("Hello, world!", 100, 100, Colors.Yellow);
         }
     }
 }
