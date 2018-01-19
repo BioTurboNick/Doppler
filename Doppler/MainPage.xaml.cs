@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Storm;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,13 +30,36 @@ namespace Doppler
         {
             this.InitializeComponent();
         }
-        Random rng = new Random();
 
-        private void CanvasControl_Draw(Microsoft.Graphics.Canvas.UI.Xaml.CanvasControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasDrawEventArgs args)
+        List<Localization> localizations;
+
+        void CanvasControl_Draw(Microsoft.Graphics.Canvas.UI.Xaml.CanvasControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasDrawEventArgs args)
         {
-            args.DrawingSession.FillCircle(new Vector2((float)(rng.NextDouble() * ActualWidth), (float)(rng.NextDouble() * ActualHeight)), 5, Colors.Red);
-            args.DrawingSession.DrawEllipse(155, 115, 80, 30, Colors.Black, 3);
-            args.DrawingSession.DrawText("Hello, world!", 100, 100, Colors.Yellow);
+            if (localizations == null)
+                return;
+
+            double size = Math.Min(sender.ActualHeight, sender.ActualWidth);
+
+            foreach(var localization in localizations)
+            {
+                args.DrawingSession.FillCircle(new Vector2((float)(localization.XWithDriftCorrection * size / 256), (float)(localization.YWithDriftCorrection * size / 256)), 1, Colors.Red);
+            }
+            
+        }
+
+        async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var picker = new FileOpenPicker
+            {
+                FileTypeFilter = { ".bin" },
+                ViewMode = PickerViewMode.List
+            };
+
+            var file = await picker.PickSingleFileAsync();
+
+            localizations = await new MoleculeListReader().ReadMoleculeList(await file.OpenStreamForReadAsync());
+
+            canvas.Invalidate();
         }
     }
 }
