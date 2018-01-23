@@ -36,6 +36,8 @@ namespace Storm
 
         public float Intensity { get; set; }
 
+        public int Category { get; set; }
+
         public int Frame { get; set; }
 
         public int Length { get; set; }

@@ -1,0 +1,47 @@
+﻿<UserControl
+    x:Class="Doppler.Controls.ChannelControlPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Doppler.Controls"
+    xmlns:vc="using:Doppler.ValueConverters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <vc:BooleanToNullableConverter x:Key="BooleanToNullableConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Margin="5">
+        <TextBlock Text="{x:Bind ViewModel.Name}"
+                   Foreground="{x:Bind ViewModel.Color}"
+                   Style="{StaticResource HeaderTextBlockStyle}"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{x:Bind ViewModel.Localizations.Count}"/>
+            <TextBlock Text=" localizations"/>
+        </StackPanel>
+        <TextBlock Text="Show Channel"/>
+        <CheckBox IsChecked="{x:Bind ViewModel.IsVisible, Converter={StaticResource BooleanToNullableConverter}, Mode=TwoWay}"/>
+        <TextBlock Text="Apply Drift Correction"/>
+        <CheckBox IsChecked="{x:Bind ViewModel.IsUsingDriftCorrection, Converter={StaticResource BooleanToNullableConverter}, Mode=TwoWay}"/>
+        <TextBlock Text="Min Peak Height"/>
+        <Slider Maximum="{x:Bind ViewModel.MaxPeakHeight}"
+                Minimum="{x:Bind ViewModel.MinPeakHeight}"
+                Value="{x:Bind ViewModel.MinPeakHeightThreshold, Mode=TwoWay}"/>
+        <TextBlock Text="Max Peak Height"/>
+        <Slider Maximum="{x:Bind ViewModel.MaxPeakHeight}"
+                Minimum="{x:Bind ViewModel.MinPeakHeight}"
+                Value="{x:Bind ViewModel.MaxPeakHeightThreshold, Mode=TwoWay}"/>
+        <TextBlock Text="Min Frame"/>
+        <Slider Maximum="{x:Bind ViewModel.MaxFrame}"
+                Minimum="{x:Bind ViewModel.MinFrame}"
+                Value="{x:Bind ViewModel.MinFrameThreshold, Mode=TwoWay}"/>
+        <TextBlock Text="Max Frame"/>
+        <Slider Maximum="{x:Bind ViewModel.MaxFrame}"
+                Minimum="{x:Bind ViewModel.MinFrame}"
+                Value="{x:Bind ViewModel.MaxFrameThreshold, Mode=TwoWay}"/>
+    </StackPanel>
+</UserControl>

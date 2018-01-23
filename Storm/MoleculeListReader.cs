@@ -38,9 +38,10 @@ namespace Storm
                             AxialRatio = reader.ReadSingle(),
                             Background = reader.ReadSingle(),
                             Intensity = reader.ReadSingle(),
+                            Category = reader.ReadInt32()
                         };
                         
-                        stream.Seek(8, SeekOrigin.Current);
+                        stream.Seek(4, SeekOrigin.Current);
 
                         localization.Frame = reader.ReadInt32();
                         localization.Length = reader.ReadInt32();
