@@ -99,6 +99,7 @@
     <Compile Include="Controls\ChannelControlPanel.xaml.cs">
       <DependentUpon>ChannelControlPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="ValueConverters\BooleanToNullableConverter.cs" />
     <Compile Include="ViewModels\ChannelViewModel.cs" />
     <Compile Include="ViewModels\ViewModel%28T%29.cs" />

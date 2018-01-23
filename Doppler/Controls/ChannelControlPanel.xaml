@@ -12,12 +12,13 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <vc:BooleanToNullableConverter x:Key="BooleanToNullableConverter"/>
+            <vc:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel Margin="5">
         <TextBlock Text="{x:Bind ViewModel.Name}"
-                   Foreground="{x:Bind ViewModel.Color}"
+                   Foreground="{x:Bind ViewModel.Color, Converter={StaticResource ColorToSolidColorBrushConverter}}"
                    Style="{StaticResource HeaderTextBlockStyle}"/>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{x:Bind ViewModel.Localizations.Count}"/>
