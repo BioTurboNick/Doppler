@@ -21,6 +21,7 @@ namespace Doppler.ViewModels
         double _MaxFrameThreshold;
         bool _IsVisible;
         bool _IsUsingDriftCorrection;
+        bool _IsUsingDriftAndChromaticAbberationCorrection;
 
 
         public ChannelViewModel(IEnumerable<Localization> localizations = null)
@@ -100,6 +101,12 @@ namespace Doppler.ViewModels
         {
             get => _IsUsingDriftCorrection;
             set => Set(ref _IsUsingDriftCorrection, value);
+        }
+
+        public bool IsUsingDriftAndChromaticAbberationCorrection
+        {
+            get => _IsUsingDriftAndChromaticAbberationCorrection;
+            set => Set(ref _IsUsingDriftAndChromaticAbberationCorrection, value);
         }
     }
 }

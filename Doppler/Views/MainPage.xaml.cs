@@ -100,19 +100,22 @@ namespace Doppler.Views
 
             double size = Math.Min(sender.ActualHeight, sender.ActualWidth);
 
-            foreach (var localization in channel.Localizations)
+            var filteredLocalizations = channel.Localizations.Where(l => l.PeakHeight >= channel.MinPeakHeightThreshold)
+                .Where(l => l.PeakHeight <= channel.MaxPeakHeightThreshold)
+                .Where(l => l.Frame >= channel.MinFrameThreshold)
+                .Where(l => l.Frame <= channel.MaxFrameThreshold);
+
+            foreach (var localization in filteredLocalizations)
             {
-                if (localization.PeakHeight < channel.MinPeakHeightThreshold ||
-                    localization.PeakHeight > channel.MaxPeakHeightThreshold ||
-                    localization.Frame < channel.MinFrameThreshold ||
-                    localization.Frame > channel.MaxFrameThreshold)
-                    continue;
+                double x = channel.IsUsingDriftAndChromaticAbberationCorrection ? localization.XWithDriftAndChromaticAberrationCorrection :
+                    channel.IsUsingDriftCorrection ? localization.XWithDriftCorrection : localization.X;
+                double y = channel.IsUsingDriftAndChromaticAbberationCorrection ? localization.YWithDriftAndChromaticAberrationCorrection : 
+                    channel.IsUsingDriftCorrection ? localization.YWithDriftCorrection : localization.Y;
 
-                double x = channel.IsUsingDriftCorrection ? localization.XWithDriftCorrection * size / 256 * zoomFactor : localization.X * size / 256 * zoomFactor;
-                double y = channel.IsUsingDriftCorrection ? localization.YWithDriftCorrection * size / 256 * zoomFactor : localization.Y * size / 256 * zoomFactor;
-
-                args.DrawingSession.FillCircle(new Vector2((float)x, (float)y), 1, color);
+                args.DrawingSession.FillCircle(new Vector2((float)scale(x), (float)scale(y)), 1, color);
             }
+
+            double scale(double value) => value * size / 256 * zoomFactor;
         }
     }
 }

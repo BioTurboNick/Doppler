@@ -29,5 +29,7 @@ namespace Doppler.Controls
         
 
         public ChannelViewModel ViewModel { get; set; }
+
+        public bool? Neither(bool value1, bool value2) => !(value1 || value2);
     }
 }

@@ -27,7 +27,9 @@
         <TextBlock Text="Show Channel"/>
         <CheckBox IsChecked="{x:Bind ViewModel.IsVisible, Converter={StaticResource BooleanToNullableConverter}, Mode=TwoWay}"/>
         <TextBlock Text="Apply Drift Correction"/>
-        <CheckBox IsChecked="{x:Bind ViewModel.IsUsingDriftCorrection, Converter={StaticResource BooleanToNullableConverter}, Mode=TwoWay}"/>
+        <RadioButton GroupName="{x:Bind ViewModel.Name, Mode=OneWay}" IsChecked="{x:Bind Neither(ViewModel.IsUsingDriftCorrection, ViewModel.IsUsingDriftAndChromaticAbberationCorrection), Converter={StaticResource BooleanToNullableConverter}, Mode=OneWay}" Content="None"/>
+        <RadioButton GroupName="{x:Bind ViewModel.Name, Mode=OneWay}" IsChecked="{x:Bind ViewModel.IsUsingDriftCorrection, Converter={StaticResource BooleanToNullableConverter}, Mode=TwoWay}" Content="Drift Only"/>
+        <RadioButton GroupName="{x:Bind ViewModel.Name, Mode=OneWay}" IsChecked="{x:Bind ViewModel.IsUsingDriftAndChromaticAbberationCorrection, Converter={StaticResource BooleanToNullableConverter}, Mode=TwoWay}" Content="Drift + Chromatic Abberation"/>
         <TextBlock Text="Min Peak Height"/>
         <Slider Maximum="{x:Bind ViewModel.MaxPeakHeight}"
                 Minimum="{x:Bind ViewModel.MinPeakHeight}"

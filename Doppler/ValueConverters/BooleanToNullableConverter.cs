@@ -14,7 +14,7 @@ namespace Doppler.ValueConverters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (targetType != typeof(bool?) || !(value is bool boolValue))
-                return DependencyProperty.UnsetValue;
+                return null;
 
             return new bool?(boolValue);
         }
@@ -22,7 +22,7 @@ namespace Doppler.ValueConverters
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             if (targetType != typeof(bool) || !(value is bool boolValue))
-                return DependencyProperty.UnsetValue;
+                return null;
 
             return boolValue;
         }
